@@ -1,5 +1,6 @@
 fffmpeg
 *.wav
+*.mp3
 *.jpg
 *.mp4
 /.mypy_cache
