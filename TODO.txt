@@ -1,0 +1,8 @@
+TODO
+2. Blank out non image_type etc.
+3. Use native dialog boxes
+4. Remove deprecated code
+5. **** Create git repo for project
+6. Close without self.show()
+..
+Make it downloadable/package it
