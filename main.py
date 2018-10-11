@@ -20,22 +20,22 @@ class App(QWidget):
 
     def saveFileDialog(self, window_title):
         options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
         (fileName, _) = QFileDialog.getSaveFileName(self,
                 window_title, '',
                 'All Files (*);;Text Files (*.txt)', options=options)
         if fileName:
+            print(fileName)
             return fileName
 
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        image_filename = self.openFileNameDialog('Choose Image Filename')
+        image_filename = self.openFileNameDialog('Choose Image Filename', '(*.jpg *.jpeg *.png)')
         if image_filename is None:
             self.show()
             return
-        audio_filename = self.openFileNameDialog('Choose Audio Filename')
+        audio_filename = self.openFileNameDialog('Choose Audio Filename', '(*.mp3 *.wav)')
         if audio_filename is None:
             self.show()
             return
@@ -47,13 +47,12 @@ class App(QWidget):
         self.fffmpeg_run(image_filename, audio_filename, save_file_destination)
         self.show()
 
-    def openFileNameDialog(self,window_title):
+    def openFileNameDialog(self,window_title,file_type):
         options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
 
         (fileName, _) = QFileDialog.getOpenFileName(self,
                 window_title, '',
-                'Text Files (*.py);;Python Files (*.py)', options=options)
+                file_type, options=options)
 
         if fileName:
             return fileName
@@ -68,7 +67,7 @@ class App(QWidget):
             print(files)
 
     def fffmpeg_run(self, image_filename, audio_filename, save_file_destination):
-        completed = subprocess.run("./fffmpeg -loop 1 -i " + image_filename + " -i " + audio_filename + " -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "+ save_file_destination, shell=True)
+        completed = subprocess.run("./fffmpeg -loop 1 -i " + '"' + image_filename + '"' + " -i " + '"' + audio_filename + '"' + " -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "+ '"' + save_file_destination + '"', shell=True)
         print('returncode:', completed.returncode)
 if __name__ == '__main__':
     app = QApplication(sys.argv)
