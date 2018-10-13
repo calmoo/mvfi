@@ -6,3 +6,4 @@
 * ~~Create git repo for project~~
 * Close without self.show()
 * Make it downloadable/package it
+* Build with https://build-system.fman.io/
